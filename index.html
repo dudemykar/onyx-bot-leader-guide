@@ -128,96 +128,6 @@
     </div>
   </section>
 
-  <!-- PLAYER FEATURES -->
-  <section id="player">
-    <div class="lbl">🎮 <b>Public &amp; player-facing features</b></div>
-    <div class="stack">
-
-      <div class="feat" style="--c:var(--blue)"><h3>📊 /rank <span class="badge everyone">EVERYONE</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Show the lifetime-XP leaderboard and a player's rank.</dd>
-          <dt>How to use</dt><dd>Run <code>/rank</code> for the top 20 with your own row pinned at the bottom, or <code>/rank @player</code> for one person's card.</dd>
-          <dt>Needs</dt><dd>None — usable by anyone, in any channel.</dd>
-          <dt>Example</dt><dd class="ex">/rank @Asaish</dd>
-          <dt>Result</dt><dd>An ephemeral (only-you) message with level, total XP, rank, and a progress bar to the next level.</dd>
-          <dt>Notes</dt><dd>Reply is visible only to the caller. Players with no XP yet are told so.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--purple)"><h3>🏆 /saga <span class="badge everyone">EVERYONE</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Show the Saga Points prestige leaderboard and a player's standing.</dd>
-          <dt>How to use</dt><dd><code>/saga</code> for the top 10 with your row pinned at the bottom, or <code>/saga @player</code> for one person's standing.</dd>
-          <dt>Needs</dt><dd>None — any channel.</dd>
-          <dt>Example</dt><dd class="ex">/saga</dd>
-          <dt>Result</dt><dd>Ephemeral leaderboard of Saga Points (rank · points). Only players with &gt; 0 points appear.</dd>
-          <dt>Notes</dt><dd>Saga Points are awarded by leadership (see Progression); players cannot award their own.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--indigo)"><h3>❓ /ask <span class="badge everyone">TEAM CHANNELS</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Answer questions using community knowledge and the announcement forum threads.</dd>
-          <dt>How to use</dt><dd><code>/ask &lt;question&gt;</code> in a team channel. It classifies intent and reads the relevant thread: latest announcement, objective, emergency, alliance/relations status, or a full "all details" recap.</dd>
-          <dt>Needs</dt><dd>Must be used in a team-category channel.</dd>
-          <dt>Example</dt><dd class="ex">/ask what is the latest objective?</dd>
-          <dt>Result</dt><dd>Ephemeral answer drawn only from the forum threads + game knowledge. If it can't find an answer, it says so rather than inventing one.</dd>
-          <dt>Notes</dt><dd>Answers reflect the four announcement forum threads; keep those current for best results.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--green)"><h3>📋 /roster &amp; /roster-search <span class="badge everyone">TEAM CHANNELS</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>View the official roster or check whether a player is on it.</dd>
-          <dt>How to use</dt><dd><code>/roster</code> lists every member; <code>/roster-search &lt;name&gt;</code> looks one up (partial match).</dd>
-          <dt>Needs</dt><dd>Team-category channel.</dd>
-          <dt>Example</dt><dd class="ex">/roster-search morv</dd>
-          <dt>Result</dt><dd>Ephemeral list or a ✅/❌ match result.</dd>
-          <dt>Notes</dt><dd>Read-only for members. The roster is edited by roster managers (see Roster).</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--pink)"><h3>📅 Event reminders &amp; RSVP buttons <span class="badge everyone">EVERYONE</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Notify the team ~1 hour before a scheduled operation and collect attendance.</dd>
-          <dt>How to use</dt><dd>No command — when a plan the bot detected is about to start, it posts a reminder with <b>✅ In / ❌ Out / ❔ Maybe</b> buttons. Click one to RSVP; click again to change.</dd>
-          <dt>Needs</dt><dd>None to RSVP. A configured reminder role is optionally pinged.</dd>
-          <dt>Result</dt><dd>The post updates live with the In / Out / Maybe name lists. RSVPing also grants XP (once per event).</dd>
-          <dt>Notes</dt><dd>Reminders fire once per plan, only inside the final hour before start.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--lime)"><h3>💬 Chill-zone banter <span class="badge everyone">PUBLIC</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Light, automatic community banter to keep the chill channel fun.</dd>
-          <dt>How to use</dt><dd>Just chat in the chill-zone channel. Roughly every 10 messages the bot drops one short witty reply.</dd>
-          <dt>Needs</dt><dd>None.</dd>
-          <dt>Result</dt><dd>An occasional one-liner from the bot (powered by Haiku). Rate-limited by a token so it never spams.</dd>
-          <dt>Notes</dt><dd>The separate "team joke" channel system exists in code but is currently turned OFF.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--amber)"><h3>🏅 Leaderboard channels <span class="badge everyone">EVERYONE</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Always-visible rankings without running a command.</dd>
-          <dt>How to use</dt><dd>Open the team leaderboard channel (Saga Points + Lifetime XP, top 10 each) or the chill-zone leaderboard (Lifetime XP only).</dd>
-          <dt>Result</dt><dd>Two persistent messages the bot edits in place every 5 minutes (only when the data actually changed).</dd>
-          <dt>Notes</dt><dd>These channels earn no XP themselves (excluded).</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--cyan)"><h3>ℹ️ !commands (team view) <span class="badge everyone">TEAM CHANNELS</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Show members the slash commands available to them.</dd>
-          <dt>How to use</dt><dd>Type <code>!commands</code> in a team channel.</dd>
-          <dt>Result</dt><dd>A self-deleting list of the player slash commands only.</dd>
-          <dt>Notes</dt><dd>In leadership/admin areas the same command shows the full leadership list instead.</dd>
-        </dl>
-      </div>
-
-    </div>
-  </section>
-
   <!-- LEADERSHIP COMMANDS -->
   <section id="lead">
     <div class="lbl">🛡️ <b>Leadership &amp; admin commands</b></div>
@@ -325,6 +235,96 @@
           <dt>Notes</dt><dd>Comparison is case-insensitive. Use it to reconcile the roster after membership changes.</dd>
         </dl>
       </div>
+    </div>
+  </section>
+
+  <!-- PLAYER FEATURES -->
+  <section id="player">
+    <div class="lbl">🎮 <b>Public &amp; player-facing features</b></div>
+    <div class="stack">
+
+      <div class="feat" style="--c:var(--blue)"><h3>📊 /rank <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Show the lifetime-XP leaderboard and a player's rank.</dd>
+          <dt>How to use</dt><dd>Run <code>/rank</code> for the top 20 with your own row pinned at the bottom, or <code>/rank @player</code> for one person's card.</dd>
+          <dt>Needs</dt><dd>None — usable by anyone, in any channel.</dd>
+          <dt>Example</dt><dd class="ex">/rank @Asaish</dd>
+          <dt>Result</dt><dd>An ephemeral (only-you) message with level, total XP, rank, and a progress bar to the next level.</dd>
+          <dt>Notes</dt><dd>Reply is visible only to the caller. Players with no XP yet are told so.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--purple)"><h3>🏆 /saga <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Show the Saga Points prestige leaderboard and a player's standing.</dd>
+          <dt>How to use</dt><dd><code>/saga</code> for the top 10 with your row pinned at the bottom, or <code>/saga @player</code> for one person's standing.</dd>
+          <dt>Needs</dt><dd>None — any channel.</dd>
+          <dt>Example</dt><dd class="ex">/saga</dd>
+          <dt>Result</dt><dd>Ephemeral leaderboard of Saga Points (rank · points). Only players with &gt; 0 points appear.</dd>
+          <dt>Notes</dt><dd>Saga Points are awarded by leadership (see Progression); players cannot award their own.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--indigo)"><h3>❓ /ask <span class="badge everyone">TEAM CHANNELS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Answer questions using community knowledge and the announcement forum threads.</dd>
+          <dt>How to use</dt><dd><code>/ask &lt;question&gt;</code> in a team channel. It classifies intent and reads the relevant thread: latest announcement, objective, emergency, alliance/relations status, or a full "all details" recap.</dd>
+          <dt>Needs</dt><dd>Must be used in a team-category channel.</dd>
+          <dt>Example</dt><dd class="ex">/ask what is the latest objective?</dd>
+          <dt>Result</dt><dd>Ephemeral answer drawn only from the forum threads + game knowledge. If it can't find an answer, it says so rather than inventing one.</dd>
+          <dt>Notes</dt><dd>Answers reflect the four announcement forum threads; keep those current for best results.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--green)"><h3>📋 /roster &amp; /roster-search <span class="badge everyone">TEAM CHANNELS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>View the official roster or check whether a player is on it.</dd>
+          <dt>How to use</dt><dd><code>/roster</code> lists every member; <code>/roster-search &lt;name&gt;</code> looks one up (partial match).</dd>
+          <dt>Needs</dt><dd>Team-category channel.</dd>
+          <dt>Example</dt><dd class="ex">/roster-search morv</dd>
+          <dt>Result</dt><dd>Ephemeral list or a ✅/❌ match result.</dd>
+          <dt>Notes</dt><dd>Read-only for members. The roster is edited by roster managers (see Roster).</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--pink)"><h3>📅 Event reminders &amp; RSVP buttons <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Notify the team ~1 hour before a scheduled operation and collect attendance.</dd>
+          <dt>How to use</dt><dd>No command — when a plan the bot detected is about to start, it posts a reminder with <b>✅ In / ❌ Out / ❔ Maybe</b> buttons. Click one to RSVP; click again to change.</dd>
+          <dt>Needs</dt><dd>None to RSVP. A configured reminder role is optionally pinged.</dd>
+          <dt>Result</dt><dd>The post updates live with the In / Out / Maybe name lists. RSVPing also grants XP (once per event).</dd>
+          <dt>Notes</dt><dd>Reminders fire once per plan, only inside the final hour before start.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--lime)"><h3>💬 Chill-zone banter <span class="badge everyone">PUBLIC</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Light, automatic community banter to keep the chill channel fun.</dd>
+          <dt>How to use</dt><dd>Just chat in the chill-zone channel. Roughly every 10 messages the bot drops one short witty reply.</dd>
+          <dt>Needs</dt><dd>None.</dd>
+          <dt>Result</dt><dd>An occasional one-liner from the bot (powered by Haiku). Rate-limited by a token so it never spams.</dd>
+          <dt>Notes</dt><dd>The separate "team joke" channel system exists in code but is currently turned OFF.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--amber)"><h3>🏅 Leaderboard channels <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Always-visible rankings without running a command.</dd>
+          <dt>How to use</dt><dd>Open the team leaderboard channel (Saga Points + Lifetime XP, top 10 each) or the chill-zone leaderboard (Lifetime XP only).</dd>
+          <dt>Result</dt><dd>Two persistent messages the bot edits in place every 5 minutes (only when the data actually changed).</dd>
+          <dt>Notes</dt><dd>These channels earn no XP themselves (excluded).</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--cyan)"><h3>ℹ️ !commands (team view) <span class="badge everyone">TEAM CHANNELS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Show members the slash commands available to them.</dd>
+          <dt>How to use</dt><dd>Type <code>!commands</code> in a team channel.</dd>
+          <dt>Result</dt><dd>A self-deleting list of the player slash commands only.</dd>
+          <dt>Notes</dt><dd>In leadership/admin areas the same command shows the full leadership list instead.</dd>
+        </dl>
+      </div>
+
     </div>
   </section>
 
