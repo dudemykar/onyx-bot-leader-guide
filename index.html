@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onyx Bot — Administrator Guide</title>
+<style>
+  :root{
+    --bg:#080b11; --panel:#121826; --panel2:#0d121c; --border:#212c3e; --border2:#2b3950;
+    --text:#e9eef7; --muted:#8a98ad; --mono:#a9b8cd; --chipbg:#0a0f18;
+    --blue:#4aa3ff; --gold:#f2c14e; --purple:#b58cff; --green:#52d39a; --teal:#39d3c3;
+    --red:#ff6b6b; --orange:#ff9f45; --pink:#ff7eb6; --cyan:#46c8ff; --indigo:#8a8cff;
+    --lime:#9ad94e; --sky:#5cc8ff; --violet:#c08bff; --amber:#ffbf47;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(1300px 640px at 82% -8%,#15263f 0%,var(--bg) 52%);
+       color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+       -webkit-font-smoothing:antialiased;padding-bottom:60px}
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  code,.mono{font-family:'SF Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  header{padding:34px 0 6px}
+  .hero{display:flex;align-items:center;gap:16px}
+  .logo{width:60px;height:60px;border-radius:17px;flex:0 0 auto;
+        background:linear-gradient(135deg,#ff6b6b,#f2c14e 55%,#b58cff);
+        display:flex;align-items:center;justify-content:center;font-size:31px;
+        box-shadow:0 10px 34px rgba(242,193,78,.28)}
+  h1{font-size:31px;margin:0;letter-spacing:.2px}
+  .sub{color:var(--muted);font-size:14.5px;margin-top:4px}
+  .bar{position:sticky;top:0;z-index:20;background:rgba(8,11,17,.82);backdrop-filter:blur(10px);
+       border-bottom:1px solid var(--border);margin-top:18px}
+  .barin{max-width:960px;margin:0 auto;padding:11px 22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .nav{display:flex;gap:7px;flex-wrap:wrap;flex:1}
+  .nav a{color:var(--muted);font-size:12.5px;text-decoration:none;border:1px solid var(--border);padding:5px 11px;border-radius:999px;white-space:nowrap}
+  .nav a:hover{color:var(--text);border-color:var(--border2)}
+  .search{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--muted);min-width:200px}
+  .search input{all:unset;flex:1;color:var(--text);font-size:14px}
+  section{padding-top:30px}
+  .lbl{font-size:12px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 2px 14px}
+  .lbl b{color:var(--text)}
+  .intro{color:var(--muted);font-size:13.5px;line-height:1.6;margin:-6px 2px 14px}
+  .stack{display:flex;flex-direction:column;gap:12px}
+  .feat{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:13px;padding:15px 16px;border-left:3px solid var(--c,#4aa3ff)}
+  .feat h3{margin:0;font-size:15.5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .badge{font-size:10px;font-weight:700;letter-spacing:.4px;border-radius:6px;padding:2px 8px;border:1px solid;margin-left:auto}
+  .badge.everyone{color:var(--green);border-color:#1f5b43;background:#0c1b15}
+  .badge.lead{color:var(--gold);border-color:#5b4a1f;background:#1b160c}
+  .badge.owner{color:var(--red);border-color:#5b2424;background:#1b0d0d}
+  .badge.roster{color:var(--teal);border-color:#1f5b56;background:#0c1b1a}
+  .badge.diplo{color:var(--blue);border-color:#22456b;background:#0c1622}
+  .badge.auto{color:var(--muted);border-color:var(--border2);background:var(--chipbg)}
+  .feat dl{display:grid;grid-template-columns:94px 1fr;gap:7px 12px;margin:11px 0 0}
+  .feat dt{color:var(--muted);font-size:10px;letter-spacing:.6px;text-transform:uppercase;padding-top:3px}
+  .feat dd{margin:0;font-size:13px;color:var(--text);line-height:1.5}
+  .feat dd code{font-family:'SF Mono',ui-monospace,monospace;font-size:12px;color:var(--gold);background:var(--chipbg);border:1px solid var(--border);border-radius:6px;padding:2px 7px}
+  .feat dd.ex{font-family:'SF Mono',ui-monospace,monospace;font-size:12px;color:var(--mono);background:var(--chipbg);border:1px solid var(--border);border-radius:7px;padding:8px 10px}
+  .tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .tier{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:12px;padding:14px;border-left:3px solid var(--c)}
+  .tier h3{margin:0 0 5px;font-size:14.5px} .tier p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.5}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .info{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:13px;padding:15px}
+  .info h3{margin:0 0 9px;font-size:14.5px}
+  .info p,.info li{color:var(--muted);font-size:12.8px;line-height:1.55} .info ul{margin:0;padding-left:18px} .info code{color:var(--gold);font-size:11.5px}
+  .nores{padding:14px;color:var(--muted);font-size:13px;display:none}
+  .foot{color:var(--muted);font-size:12px;text-align:center;margin-top:34px;border-top:1px solid var(--border);padding-top:18px}
+  @media(max-width:680px){.tiers,.two{grid-template-columns:1fr}.feat dl{grid-template-columns:1fr}.feat dt{padding-top:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="hero">
+      <div class="logo">🛡️</div>
+      <div>
+        <h1>Onyx Bot — Administrator Guide</h1>
+        <div class="sub">Complete master reference for owners &amp; administrators · every command, automation, and restricted feature on the platform.</div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="bar"><div class="barin">
+  <nav class="nav">
+    <a href="#overview">Overview</a>
+    <a href="#perms">Permissions</a>
+    <a href="#player">Player features</a>
+    <a href="#lead">Leadership commands</a>
+    <a href="#roster">Roster</a>
+    <a href="#diplo">Diplomacy</a>
+    <a href="#auto">Automation</a>
+    <a href="#silent">Silent systems</a>
+    <a href="#prog">Progression</a>
+    <a href="#integ">Integrations</a>
+    <a href="#deploy">Config &amp; deploy</a>
+  </nav>
+  <div class="search">🔍 <input id="q" placeholder="Search every feature…"></div>
+</div></div>
+
+<div class="wrap" id="root">
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="lbl">📖 <b>Overview</b></div>
+    <p class="intro">Onyx Bot is the community's Discord assistant for the gaming guild. It runs leadership briefings, tracks public XP &amp; Saga prestige, manages the roster (synced to a Google Sheet), detects and reminds about scheduled operations, analyzes screenshots with AI vision, and powers a diplomacy toolkit for the roundtable. It is built on Node.js / discord.js, uses the Anthropic Claude API, and persists everything to PostgreSQL on Railway.</p>
+    <div class="two">
+      <div class="info"><h3>🤖 AI models</h3><ul>
+        <li><code>claude-opus-4-8</code> — summaries, digests, plan detection, screenshot vision, diplomacy intents, roster screenshot reads, long-term memory</li>
+        <li><code>claude-sonnet-4-6</code> — <code>/ask</code> answers</li>
+        <li><code>claude-haiku-4-5</code> — intent classification &amp; chill-zone banter</li>
+      </ul></div>
+      <div class="info"><h3>🔌 Integrations</h3><ul>
+        <li><b>Discord</b> (discord.js) — the bot itself</li>
+        <li><b>Anthropic Claude API</b> — all AI features</li>
+        <li><b>Google Sheets</b> — roster source of truth &amp; sync</li>
+        <li><b>PostgreSQL on Railway</b> — saves flags, plans, XP, Saga, screenshots, RSVPs, memory, logs</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- PERMISSIONS -->
+  <section id="perms">
+    <div class="lbl">🔑 <b>Permission tiers</b></div>
+    <div class="tiers">
+      <div class="tier" style="--c:var(--red)"><h3>👑 Owner</h3><p>The single owner account. Receives the 16:00 UTC personal digest and the automatic 25-message DM snapshots. Only the owner can run <code>!summarize dm</code> and <code>!memory clear</code>.</p></div>
+      <div class="tier" style="--c:var(--gold)"><h3>🛡️ Leadership / Admin</h3><p>Members holding the leadership or admin role. Can run every <code>!</code> command (summaries, flags, memory, activity, Saga awards/reset, utility). Saga claim-reactions are honored only from these roles.</p></div>
+      <div class="tier" style="--c:var(--teal)"><h3>📋 Roster managers</h3><p>A hard-coded allow-list of Discord user IDs. Required for any roster mutation (<code>add</code>, <code>remove</code>, <code>check</code>, <code>clear</code>). Works only in the admin category / admin forum.</p></div>
+      <div class="tier" style="--c:var(--green)"><h3>🎮 Members</h3><p>Anyone holding a tracked member role. Earns XP, participates in Saga &amp; RSVPs, and uses the player slash commands. <code>/rank</code> and <code>/saga</code> are usable by anyone, anywhere.</p></div>
+    </div>
+  </section>
+
+  <!-- PLAYER FEATURES -->
+  <section id="player">
+    <div class="lbl">🎮 <b>Public &amp; player-facing features</b></div>
+    <div class="stack">
+
+      <div class="feat" style="--c:var(--blue)"><h3>📊 /rank <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Show the lifetime-XP leaderboard and a player's rank.</dd>
+          <dt>How to use</dt><dd>Run <code>/rank</code> for the top 20 with your own row pinned at the bottom, or <code>/rank @player</code> for one person's card.</dd>
+          <dt>Needs</dt><dd>None — usable by anyone, in any channel.</dd>
+          <dt>Example</dt><dd class="ex">/rank @Asaish</dd>
+          <dt>Result</dt><dd>An ephemeral (only-you) message with level, total XP, rank, and a progress bar to the next level.</dd>
+          <dt>Notes</dt><dd>Reply is visible only to the caller. Players with no XP yet are told so.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--purple)"><h3>🏆 /saga <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Show the Saga Points prestige leaderboard and a player's standing.</dd>
+          <dt>How to use</dt><dd><code>/saga</code> for the top 10 with your row pinned at the bottom, or <code>/saga @player</code> for one person's standing.</dd>
+          <dt>Needs</dt><dd>None — any channel.</dd>
+          <dt>Example</dt><dd class="ex">/saga</dd>
+          <dt>Result</dt><dd>Ephemeral leaderboard of Saga Points (rank · points). Only players with &gt; 0 points appear.</dd>
+          <dt>Notes</dt><dd>Saga Points are awarded by leadership (see Progression); players cannot award their own.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--indigo)"><h3>❓ /ask <span class="badge everyone">TEAM CHANNELS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Answer questions using community knowledge and the announcement forum threads.</dd>
+          <dt>How to use</dt><dd><code>/ask &lt;question&gt;</code> in a team channel. It classifies intent and reads the relevant thread: latest announcement, objective, emergency, alliance/relations status, or a full "all details" recap.</dd>
+          <dt>Needs</dt><dd>Must be used in a team-category channel.</dd>
+          <dt>Example</dt><dd class="ex">/ask what is the latest objective?</dd>
+          <dt>Result</dt><dd>Ephemeral answer drawn only from the forum threads + game knowledge. If it can't find an answer, it says so rather than inventing one.</dd>
+          <dt>Notes</dt><dd>Answers reflect the four announcement forum threads; keep those current for best results.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--green)"><h3>📋 /roster &amp; /roster-search <span class="badge everyone">TEAM CHANNELS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>View the official roster or check whether a player is on it.</dd>
+          <dt>How to use</dt><dd><code>/roster</code> lists every member; <code>/roster-search &lt;name&gt;</code> looks one up (partial match).</dd>
+          <dt>Needs</dt><dd>Team-category channel.</dd>
+          <dt>Example</dt><dd class="ex">/roster-search morv</dd>
+          <dt>Result</dt><dd>Ephemeral list or a ✅/❌ match result.</dd>
+          <dt>Notes</dt><dd>Read-only for members. The roster is edited by roster managers (see Roster).</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--pink)"><h3>📅 Event reminders &amp; RSVP buttons <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Notify the team ~1 hour before a scheduled operation and collect attendance.</dd>
+          <dt>How to use</dt><dd>No command — when a plan the bot detected is about to start, it posts a reminder with <b>✅ In / ❌ Out / ❔ Maybe</b> buttons. Click one to RSVP; click again to change.</dd>
+          <dt>Needs</dt><dd>None to RSVP. A configured reminder role is optionally pinged.</dd>
+          <dt>Result</dt><dd>The post updates live with the In / Out / Maybe name lists. RSVPing also grants XP (once per event).</dd>
+          <dt>Notes</dt><dd>Reminders fire once per plan, only inside the final hour before start.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--lime)"><h3>💬 Chill-zone banter <span class="badge everyone">PUBLIC</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Light, automatic community banter to keep the chill channel fun.</dd>
+          <dt>How to use</dt><dd>Just chat in the chill-zone channel. Roughly every 10 messages the bot drops one short witty reply.</dd>
+          <dt>Needs</dt><dd>None.</dd>
+          <dt>Result</dt><dd>An occasional one-liner from the bot (powered by Haiku). Rate-limited by a token so it never spams.</dd>
+          <dt>Notes</dt><dd>The separate "team joke" channel system exists in code but is currently turned OFF.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--amber)"><h3>🏅 Leaderboard channels <span class="badge everyone">EVERYONE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Always-visible rankings without running a command.</dd>
+          <dt>How to use</dt><dd>Open the team leaderboard channel (Saga Points + Lifetime XP, top 10 each) or the chill-zone leaderboard (Lifetime XP only).</dd>
+          <dt>Result</dt><dd>Two persistent messages the bot edits in place every 5 minutes (only when the data actually changed).</dd>
+          <dt>Notes</dt><dd>These channels earn no XP themselves (excluded).</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--cyan)"><h3>ℹ️ !commands (team view) <span class="badge everyone">TEAM CHANNELS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Show members the slash commands available to them.</dd>
+          <dt>How to use</dt><dd>Type <code>!commands</code> in a team channel.</dd>
+          <dt>Result</dt><dd>A self-deleting list of the player slash commands only.</dd>
+          <dt>Notes</dt><dd>In leadership/admin areas the same command shows the full leadership list instead.</dd>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LEADERSHIP COMMANDS -->
+  <section id="lead">
+    <div class="lbl">🛡️ <b>Leadership &amp; admin commands</b></div>
+    <div class="stack">
+
+      <div class="feat" style="--c:var(--blue)"><h3>🧠 !summarize · !summarize all · !summarize dm <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Generate a structured intelligence brief from chat, plans, flags, and screenshot intel.</dd>
+          <dt>How to use</dt><dd><code>!summarize</code> = this channel → leadership summary channel. <code>!summarize all</code> = all leadership channels + the four forum threads → leadership summary channel. <code>!summarize dm</code> = <span style="color:var(--red)">owner only</span>; scans all leadership + diplomacy channels and DMs the owner a factual snapshot.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category for the first two; <b>owner</b> for <code>dm</code>.</dd>
+          <dt>Example</dt><dd class="ex">!summarize all</dd>
+          <dt>Result</dt><dd>A teammate-style (or factual, for DM) brief. The <b>🔥 Tensions</b> block is always split off and posted only to the salt-mines channel — never in the main brief.</dd>
+          <dt>Notes</dt><dd>Runs Claude Opus 4.8 at max effort. The owner can also DM the bot the text <code>!summarize dm</code> privately.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--sky)"><h3>🖼️ !screenshots <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Collect the AI analyses of screenshots posted in a channel into one place.</dd>
+          <dt>How to use</dt><dd>Run <code>!screenshots</code> in a channel that has had images posted.</dd>
+          <dt>Result</dt><dd>Posts the stored screenshot descriptions to the persistent "📸 Screenshot Summaries" thread inside the leadership summary channel.</dd>
+          <dt>Notes</dt><dd>Screenshots are analyzed automatically on upload; this just surfaces them.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--violet)"><h3>🧬 !memory · !memory clear <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>View or reset the bot's long-term leadership memory (durable facts auto-distilled from the daily digests).</dd>
+          <dt>How to use</dt><dd><code>!memory</code> shows the current fact list. <code>!memory clear</code> wipes it — <span style="color:var(--red)">owner only</span>.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category to view; <b>owner</b> to clear.</dd>
+          <dt>Result</dt><dd>A numbered list of durable facts, or confirmation it was cleared (it rebuilds from the next scheduled digest).</dd>
+          <dt>Notes</dt><dd>Leadership-only. Memory never includes tensions and never touches the roundtable or <code>/ask</code>.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--red)"><h3>🚩 !flag · !flags · !unflag <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Mark important messages or screenshots so they're highlighted in summaries.</dd>
+          <dt>How to use</dt><dd><code>!flag</code> flags the previous message (or an attached/previous screenshot). <code>!flags</code> lists this channel's flags. <code>!unflag [number]</code> removes one.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category.</dd>
+          <dt>Example</dt><dd class="ex">!unflag 2</dd>
+          <dt>Result</dt><dd>The flagged item is saved and appears in summaries within its time window; the list re-posts cleanly instead of stacking.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--purple)"><h3>🏆 !award · !sagareset <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Grant Saga Points and run the seasonal reset.</dd>
+          <dt>How to use</dt><dd><code>!award @player &lt;pathing|siege|final|number&gt; [reason]</code> grants points. <code>!sagareset [label]</code> archives standings, awards lifetime-XP bonuses to the top 10, then zeros everyone.</dd>
+          <dt>Needs</dt><dd>Leadership/admin role.</dd>
+          <dt>Example</dt><dd class="ex">!award @Lobo siege Great defense</dd>
+          <dt>Result</dt><dd>Points added (objective amounts come from game config) and the leaderboard updates. Reset announces the bonus list.</dd>
+          <dt>Notes</dt><dd>Objective types &amp; point values are defined in the game config.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--orange)"><h3>🕵️ !activity <span class="badge lead">ADMIN AREA</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Leadership engagement report — who's showing up and who's gone quiet.</dd>
+          <dt>How to use</dt><dd>Run <code>!activity</code> in the admin category / admin forum.</dd>
+          <dt>Result</dt><dd>Scans the activity category (last ~30 days) and lists every role-holder with messages, reactions, RSVPs, and last-seen — split into Active and Quiet (7+ days silent).</dd>
+          <dt>Notes</dt><dd>Leadership intel only — never shown to members. Entirely separate from the public XP system.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--gold)"><h3>🧹 !clearplans · !clearscreenshots <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Manually wipe stored plans or screenshot intel.</dd>
+          <dt>How to use</dt><dd><code>!clearplans</code> empties the plan list. <code>!clearscreenshots</code> clears this channel's screenshots; <code>!clearscreenshots all</code> clears every channel's.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category.</dd>
+          <dt>Result</dt><dd>Confirmation of how many items were removed; the change is persisted.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--teal)"><h3>🏓 !ping · ℹ️ !commands (full) <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Quick health check and the complete command reference.</dd>
+          <dt>How to use</dt><dd><code>!ping</code> confirms the bot is alive (leadership/admin only). <code>!commands</code> in a leadership/admin area prints the full command list.</dd>
+          <dt>Result</dt><dd>Self-deleting replies.</dd>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ROSTER -->
+  <section id="roster">
+    <div class="lbl">📋 <b>Roster management</b></div>
+    <div class="stack">
+      <div class="feat" style="--c:var(--green)"><h3>📋 !roster add / remove / clear <span class="badge roster">ROSTER MANAGERS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Maintain the official roster, kept in sync with the Google Sheet.</dd>
+          <dt>How to use</dt><dd><code>!roster add P1, P2</code>, <code>!roster remove P1, P2</code> (comma-separated), <code>!roster clear</code>. Works only in the admin category / admin forum.</dd>
+          <dt>Needs</dt><dd>A roster-manager user ID.</dd>
+          <dt>Example</dt><dd class="ex">!roster add Spyre, Rude</dd>
+          <dt>Result</dt><dd>Updates the in-bot roster, the roster thread post, and the Google Sheet (removed players are archived to a "Previous Players" tab).</dd>
+          <dt>Notes</dt><dd><code>!roster search &lt;name&gt;</code> (no special permission) also works here.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--sky)"><h3>🔎 !roster check <span class="badge roster">ROSTER MANAGERS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Compare an in-game roster screenshot against the bot roster to spot who left.</dd>
+          <dt>How to use</dt><dd>Attach a roster screenshot to <code>!roster check</code> (or post one, then run it). Up to 3 images are read.</dd>
+          <dt>Result</dt><dd>Claude vision extracts the names, then reports who is <b>possibly missing</b> (on bot roster, not in screenshot) and who is <b>not on the bot roster</b>.</dd>
+          <dt>Notes</dt><dd>Comparison is case-insensitive. Use it to reconcile the roster after membership changes.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIPLOMACY -->
+  <section id="diplo">
+    <div class="lbl">🤝 <b>Diplomacy &amp; roundtable</b></div>
+    <div class="stack">
+      <div class="feat" style="--c:var(--teal)"><h3>🌍 Roundtable @mention toolkit <span class="badge diplo">ROUNDTABLE</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>On-demand diplomacy reports generated from the roundtable conversation and the diplomacy thread.</dd>
+          <dt>How to use</dt><dd>In the roundtable channel, @mention the bot with one of: <code>summarize</code>, <code>diplomacy</code>, <code>recent</code>, <code>agreements</code>, <code>report [team]</code>, <code>flag</code>, <code>screenshots</code>, <code>help</code>.</dd>
+          <dt>Result</dt><dd>The report is posted to the diplomacy summary channel (relationships use 🟢 allies / 🟡 neutral / 🔴 enemies).</dd>
+          <dt>Notes</dt><dd>Completely isolated from leadership data. @mentioning the bot in a non-roundtable diplomacy/friends channel returns a redirect.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--blue)"><h3>📝 /summary <span class="badge diplo">DIPLOMACY / FRIENDS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Quick AI recap of a diplomacy or friends channel.</dd>
+          <dt>How to use</dt><dd>Run <code>/summary</code> in a diplomacy/friends channel (not the roundtable — use the @mention there).</dd>
+          <dt>Result</dt><dd>An ephemeral summary of the channel's key points, future-dated events only.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--lime)"><h3>📢 Persistent "Current Game Info" <span class="badge auto">AUTOMATIC</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Keep the latest game info visible at the bottom of every diplomacy/friends channel.</dd>
+          <dt>How it works</dt><dd>Leadership posts/edits info in the info-feed channel; the bot mirrors that text as a fresh message in each diplomacy/friends channel and re-broadcasts when it changes.</dd>
+          <dt>Notes</dt><dd>Self-heals after restarts by deleting old copies before posting a new one.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION -->
+  <section id="auto">
+    <div class="lbl">⚙️ <b>Automation &amp; scheduled systems</b></div>
+    <p class="intro">These run on their own — no command needed.</p>
+    <div class="stack">
+      <div class="feat" style="--c:var(--blue)"><h3>🗓️ Scheduled digests <span class="badge auto">DAILY · UTC</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Four briefings per day: <b>06:00</b> (last 16h → leadership summary channel), <b>14:00</b> (last 8h → leadership summary channel), <b>16:00</b> (last 4h → <b>owner DM</b>, strict factual), and <b>14:00 roundtable</b> (last 24h → diplomacy summary channel, fully isolated).</dd>
+          <dt>Notes</dt><dd>The three leadership digests also build &amp; inject long-term memory. The roundtable digest never does. Failures DM the owner.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--gold)"><h3>📨 25-message trigger <span class="badge auto">AUTOMATIC</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Counts human messages across all leadership + diplomacy channels (excluding chill-zone). At 25 it sends the owner a factual DM snapshot, then resets.</dd>
+          <dt>Notes</dt><dd>No public post — owner DM only. Tensions still route to salt-mines.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--pink)"><h3>📅 Plan detection &amp; reminders <span class="badge auto">AUTOMATIC</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Claude scans ops/leadership/diplomacy messages containing a weekday + month and extracts confirmed future plans (UTC-normalized). A timer pings ~1h before each with RSVP buttons. Expired plans are cleaned up hourly.</dd>
+          <dt>Notes</dt><dd>Only future, confirmed, "ours" plans are stored; enemy/speculative/past mentions are ignored. Duplicates are de-duped by date fingerprint.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--sky)"><h3>🖼️ Screenshot analysis <span class="badge auto">AUTOMATIC · AI VISION</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Images posted in leadership, the screenshot-dump, the screenshots-only, and roundtable channels are read by Claude vision (maps, chat, stats) and stored. The intel flows into the relevant summaries.</dd>
+          <dt>Notes</dt><dd>Stored screenshots auto-expire after 48h or 25 per channel. Dump-channel intel feeds leadership summaries, never the roundtable.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--amber)"><h3>🏅 Leaderboard auto-update <span class="badge auto">EVERY 5 MIN</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Edits the two persistent leaderboard messages in place — but only when XP or Saga data actually changed (a dirty flag avoids idle rewrites).</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--purple)"><h3>🏆 Saga claim reactions <span class="badge auto">LEADERSHIP-GATED</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>In the claims channel, a leader reacting on a proof post with an objective emoji auto-awards that objective's points to the poster (guarded against double-awarding).</dd>
+          <dt>Notes</dt><dd>Only leadership/admin reactions count; objective emojis &amp; values come from game config.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- SILENT SYSTEMS -->
+  <section id="silent">
+    <div class="lbl">🫥 <b>Silent / background systems</b></div>
+    <p class="intro">Running constantly with no visible output — important to know they exist.</p>
+    <div class="stack">
+      <div class="feat" style="--c:var(--cyan)"><h3>📝 Persistent message log <span class="badge auto">SILENT</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Quietly records recent human messages from operational channels (leadership + diplomacy, roundtable, digest channels), capped at 200/channel, flushed to the database every 5 minutes and reloaded on startup.</dd>
+          <dt>Notes</dt><dd>Summaries fall back to this log if a live Discord fetch returns nothing (API hiccup or right after a restart). Casual chat is not logged.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--violet)"><h3>🧬 Long-term memory <span class="badge auto">SILENT · LEADERSHIP-ONLY</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>After each scheduled leadership digest, Claude distills durable facts (ongoing situations, standing decisions, alliances/wars, strategy), merges them into a capped 50-fact memory, and injects it into future digests for continuity.</dd>
+          <dt>Notes</dt><dd>Never includes tensions, never the roundtable, never <code>/ask</code>. View with <code>!memory</code>.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--orange)"><h3>🕵️ Activity tracker <span class="badge auto">SILENT · LEADERSHIP INTEL</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Continuously tallies each member's messages, reactions, and RSVPs for the <code>!activity</code> report, flushing to the DB periodically.</dd>
+          <dt>Notes</dt><dd>Shares zero state with the public XP system — they are deliberately separate.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--red)"><h3>🔥 Tensions routing <span class="badge auto">SILENT</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Every summary (manual or automatic) splits off its 🔥 Tensions block and posts it <b>only</b> to the salt-mines channel — never in the main brief, never to the roundtable.</dd>
+          <dt>Notes</dt><dd>The bot names repeat troublemakers and does not soften this section.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--green)"><h3>🛡️ AI prompt hardening <span class="badge auto">SILENT</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>Every Claude call carries anti-prompt-injection framing so user-submitted message/screenshot content can't hijack the bot's role.</dd>
+          <dt>Notes</dt><dd>A shared safe-extractor also prevents an empty/refused AI response from crashing a handler.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESSION -->
+  <section id="prog">
+    <div class="lbl">📈 <b>Ranking &amp; progression systems</b></div>
+    <div class="stack">
+      <div class="feat" style="--c:var(--gold)"><h3>⭐ Lifetime XP &amp; leveling <span class="badge everyone">PUBLIC</span></h3>
+        <dl>
+          <dt>How it's earned</dt><dd>Chatting (10 XP, 60-second per-user cooldown), emoji reactions (5 XP, deduped per message), and RSVPs (25 XP, once per event).</dd>
+          <dt>Curve</dt><dd>Three tiers — easy to L25, steeper to L100, brutal beyond. Never resets.</dd>
+          <dt>Gating</dt><dd>Only members with a tracked role earn XP, and excluded channels (leaderboard + screenshot-dump) earn none.</dd>
+          <dt>Notes</dt><dd>Level-ups announce in the channel where they happen. View via <code>/rank</code>.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--purple)"><h3>🏆 Saga Points <span class="badge everyone">PUBLIC · LEADERSHIP-AWARDED</span></h3>
+        <dl>
+          <dt>How it's earned</dt><dd>Proven in-game achievement only — leadership reacts with an objective emoji in the claims channel, or uses <code>!award</code>.</dd>
+          <dt>Season</dt><dd><code>!sagareset</code> archives standings, awards lifetime-XP bonuses to the top 10 (5000/3000/2000 for the podium, 1000 for places 4–10), then zeros everyone.</dd>
+          <dt>Notes</dt><dd>Objectives &amp; point values are defined in the game config. View via <code>/saga</code>.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTEGRATIONS -->
+  <section id="integ">
+    <div class="lbl">🔌 <b>Integrations</b></div>
+    <div class="two">
+      <div class="info"><h3>📗 Google Sheets (roster)</h3><p>The roster's source of truth. On startup the bot loads members from the sheet; <code>!roster</code> edits write back to it, and removed players are archived to a "Previous Players" tab. Credentials come from an environment secret.</p></div>
+      <div class="info"><h3>🗄️ PostgreSQL on Railway</h3><p>Persists flags, plans, screenshots, RSVPs, activity, XP, Saga, the message log, and long-term memory as key→JSON rows. Loaded on startup; written by periodic flushes and on change.</p></div>
+    </div>
+  </section>
+
+  <!-- CONFIG & DEPLOY -->
+  <section id="deploy">
+    <div class="lbl">🚢 <b>Configuration &amp; deployment</b></div>
+    <div class="two">
+      <div class="info"><h3>⚙️ Where settings live</h3><ul>
+        <li><code>config/constants.js</code> — every channel/role/category ID, plus lists like the digest channels, XP-tracked roles, excluded channels, salt-mines, screenshot-dump, owner ID, reminder role</li>
+        <li><code>config/game.js</code> — the game world: factions, teams, members, alliance standings, and Saga objectives/points/emojis</li>
+        <li><code>config/rosterManagers.js</code> — who may edit the roster</li>
+      </ul></div>
+      <div class="info"><h3>📦 Deploy</h3><p>Edit → push to GitHub → <b>Railway auto-deploys</b> → watch logs for <code>Bot is online as …</code>. Secrets (<code>.env</code>, Google credentials) are gitignored and set in Railway. Run <code>node register-roster.js</code> once after adding or removing a slash command.</p></div>
+    </div>
+  </section>
+
+  <div class="nores" id="nores">No features match — try another word.</div>
+  <div class="foot">🛡️ Onyx Bot · Administrator Guide · generated from the live codebase. The complete master reference.</div>
+</div>
+
+<script>
+  const q=document.getElementById('q');
+  const feats=[...document.querySelectorAll('.feat, .tier, .info')];
+  const secs=[...document.querySelectorAll('section')];
+  const nores=document.getElementById('nores');
+  q.addEventListener('input',()=>{
+    const t=q.value.trim().toLowerCase(); let shown=0;
+    feats.forEach(f=>{const ok=!t||f.textContent.toLowerCase().includes(t);f.style.display=ok?'':'none';if(ok)shown++;});
+    secs.forEach(s=>{const any=[...s.querySelectorAll('.feat,.tier,.info')].some(e=>e.style.display!=='none');
+      const hasCards=s.querySelector('.feat,.tier,.info'); s.style.display=(!t||!hasCards||any)?'':'none';});
+    nores.style.display=(t&&shown===0)?'block':'none';
+  });
+</script>
+</body>
+</html>
