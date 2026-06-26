@@ -128,116 +128,6 @@
     </div>
   </section>
 
-  <!-- LEADERSHIP COMMANDS -->
-  <section id="lead">
-    <div class="lbl">🛡️ <b>Leadership &amp; admin commands</b></div>
-    <div class="stack">
-
-      <div class="feat" style="--c:var(--blue)"><h3>🧠 !summarize · !summarize all · !summarize dm <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Generate a structured intelligence brief from chat, plans, flags, and screenshot intel.</dd>
-          <dt>How to use</dt><dd><code>!summarize</code> = this channel → leadership summary channel. <code>!summarize all</code> = all leadership channels + the four forum threads → leadership summary channel. <code>!summarize dm</code> = <span style="color:var(--red)">owner only</span>; scans all leadership + diplomacy channels and DMs the owner a factual snapshot.</dd>
-          <dt>Needs</dt><dd>Leadership/admin category for the first two; <b>owner</b> for <code>dm</code>.</dd>
-          <dt>Example</dt><dd class="ex">!summarize all</dd>
-          <dt>Result</dt><dd>A teammate-style (or factual, for DM) brief. The <b>🔥 Tensions</b> block is always split off and posted only to the salt-mines channel — never in the main brief.</dd>
-          <dt>Notes</dt><dd>Runs Claude Opus 4.8 at max effort. The owner can also DM the bot the text <code>!summarize dm</code> privately.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--sky)"><h3>🖼️ !screenshots <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Collect the AI analyses of screenshots posted in a channel into one place.</dd>
-          <dt>How to use</dt><dd>Run <code>!screenshots</code> in a channel that has had images posted.</dd>
-          <dt>Result</dt><dd>Posts the stored screenshot descriptions to the persistent "📸 Screenshot Summaries" thread inside the leadership summary channel.</dd>
-          <dt>Notes</dt><dd>Screenshots are analyzed automatically on upload; this just surfaces them.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--violet)"><h3>🧬 !memory · !memory clear <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>View or reset the bot's long-term leadership memory (durable facts auto-distilled from the daily digests).</dd>
-          <dt>How to use</dt><dd><code>!memory</code> shows the current fact list. <code>!memory clear</code> wipes it — <span style="color:var(--red)">owner only</span>.</dd>
-          <dt>Needs</dt><dd>Leadership/admin category to view; <b>owner</b> to clear.</dd>
-          <dt>Result</dt><dd>A numbered list of durable facts, or confirmation it was cleared (it rebuilds from the next scheduled digest).</dd>
-          <dt>Notes</dt><dd>Leadership-only. Memory never includes tensions and never touches the roundtable or <code>/ask</code>.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--red)"><h3>🚩 !flag · !flags · !unflag <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Mark important messages or screenshots so they're highlighted in summaries.</dd>
-          <dt>How to use</dt><dd><code>!flag</code> flags the previous message (or an attached/previous screenshot). <code>!flags</code> lists this channel's flags. <code>!unflag [number]</code> removes one.</dd>
-          <dt>Needs</dt><dd>Leadership/admin category.</dd>
-          <dt>Example</dt><dd class="ex">!unflag 2</dd>
-          <dt>Result</dt><dd>The flagged item is saved and appears in summaries within its time window; the list re-posts cleanly instead of stacking.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--purple)"><h3>🏆 !award · !sagareset <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Grant Saga Points and run the seasonal reset.</dd>
-          <dt>How to use</dt><dd><code>!award @player &lt;pathing|siege|final|number&gt; [reason]</code> grants points. <code>!sagareset [label]</code> archives standings, awards lifetime-XP bonuses to the top 10, then zeros everyone.</dd>
-          <dt>Needs</dt><dd>Leadership/admin role.</dd>
-          <dt>Example</dt><dd class="ex">!award @Lobo siege Great defense</dd>
-          <dt>Result</dt><dd>Points added (objective amounts come from game config) and the leaderboard updates. Reset announces the bonus list.</dd>
-          <dt>Notes</dt><dd>Objective types &amp; point values are defined in the game config.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--orange)"><h3>🕵️ !activity <span class="badge lead">ADMIN AREA</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Leadership engagement report — who's showing up and who's gone quiet.</dd>
-          <dt>How to use</dt><dd>Run <code>!activity</code> in the admin category / admin forum.</dd>
-          <dt>Result</dt><dd>Scans the activity category (last ~30 days) and lists every role-holder with messages, reactions, RSVPs, and last-seen — split into Active and Quiet (7+ days silent).</dd>
-          <dt>Notes</dt><dd>Leadership intel only — never shown to members. Entirely separate from the public XP system.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--gold)"><h3>🧹 !clearplans · !clearscreenshots <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Manually wipe stored plans or screenshot intel.</dd>
-          <dt>How to use</dt><dd><code>!clearplans</code> empties the plan list. <code>!clearscreenshots</code> clears this channel's screenshots; <code>!clearscreenshots all</code> clears every channel's.</dd>
-          <dt>Needs</dt><dd>Leadership/admin category.</dd>
-          <dt>Result</dt><dd>Confirmation of how many items were removed; the change is persisted.</dd>
-        </dl>
-      </div>
-
-      <div class="feat" style="--c:var(--teal)"><h3>🏓 !ping · ℹ️ !commands (full) <span class="badge lead">LEADERSHIP</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Quick health check and the complete command reference.</dd>
-          <dt>How to use</dt><dd><code>!ping</code> confirms the bot is alive (leadership/admin only). <code>!commands</code> in a leadership/admin area prints the full command list.</dd>
-          <dt>Result</dt><dd>Self-deleting replies.</dd>
-        </dl>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ROSTER -->
-  <section id="roster">
-    <div class="lbl">📋 <b>Roster management</b></div>
-    <div class="stack">
-      <div class="feat" style="--c:var(--green)"><h3>📋 !roster add / remove / clear <span class="badge roster">ROSTER MANAGERS</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Maintain the official roster, kept in sync with the Google Sheet.</dd>
-          <dt>How to use</dt><dd><code>!roster add P1, P2</code>, <code>!roster remove P1, P2</code> (comma-separated), <code>!roster clear</code>. Works only in the admin category / admin forum.</dd>
-          <dt>Needs</dt><dd>A roster-manager user ID.</dd>
-          <dt>Example</dt><dd class="ex">!roster add Spyre, Rude</dd>
-          <dt>Result</dt><dd>Updates the in-bot roster, the roster thread post, and the Google Sheet (removed players are archived to a "Previous Players" tab).</dd>
-          <dt>Notes</dt><dd><code>!roster search &lt;name&gt;</code> (no special permission) also works here.</dd>
-        </dl>
-      </div>
-      <div class="feat" style="--c:var(--sky)"><h3>🔎 !roster check <span class="badge roster">ROSTER MANAGERS</span></h3>
-        <dl>
-          <dt>Purpose</dt><dd>Compare an in-game roster screenshot against the bot roster to spot who left.</dd>
-          <dt>How to use</dt><dd>Attach a roster screenshot to <code>!roster check</code> (or post one, then run it). Up to 3 images are read.</dd>
-          <dt>Result</dt><dd>Claude vision extracts the names, then reports who is <b>possibly missing</b> (on bot roster, not in screenshot) and who is <b>not on the bot roster</b>.</dd>
-          <dt>Notes</dt><dd>Comparison is case-insensitive. Use it to reconcile the roster after membership changes.</dd>
-        </dl>
-      </div>
-    </div>
-  </section>
-
   <!-- PLAYER FEATURES -->
   <section id="player">
     <div class="lbl">🎮 <b>Public &amp; player-facing features</b></div>
@@ -328,6 +218,116 @@
     </div>
   </section>
 
+  <!-- LEADERSHIP COMMANDS -->
+  <section id="lead">
+    <div class="lbl">🛡️ <b>Leadership &amp; admin commands</b></div>
+    <div class="stack">
+
+      <div class="feat" style="--c:var(--blue)"><h3>🧠 !summarize · !summarize all · !summarize dm <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Generate a structured intelligence brief from chat, plans, flags, and screenshot intel.</dd>
+          <dt>How to use</dt><dd><code>!summarize</code> = this channel → leadership summary channel. <code>!summarize all</code> = all leadership channels + the four forum threads → leadership summary channel. <code>!summarize dm</code> = <span style="color:var(--red)">owner only</span>; scans all leadership + diplomacy channels and DMs the owner a factual snapshot.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category for the first two; <b>owner</b> for <code>dm</code>.</dd>
+          <dt>Example</dt><dd class="ex">!summarize all</dd>
+          <dt>Result</dt><dd>A teammate-style (or factual, for DM) brief. The <b>🔥 Tensions</b> block is always split off and posted only to the salt-mines channel — never in the main brief.</dd>
+          <dt>Notes</dt><dd>Runs Claude Opus 4.8 at max effort. The owner can also DM the bot the text <code>!summarize dm</code> privately.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--sky)"><h3>🖼️ !screenshots <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Collect the AI analyses of screenshots posted in a channel into one place.</dd>
+          <dt>How to use</dt><dd>Run <code>!screenshots</code> in a channel that has had images posted.</dd>
+          <dt>Result</dt><dd>Posts the stored screenshot descriptions to the persistent "📸 Screenshot Summaries" thread inside the leadership summary channel.</dd>
+          <dt>Notes</dt><dd>Screenshots are analyzed automatically on upload; this just surfaces them.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--violet)"><h3>🧬 !memory · !memory clear <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>View or reset the bot's long-term leadership memory (durable facts auto-distilled from the daily digests).</dd>
+          <dt>How to use</dt><dd><code>!memory</code> shows the current fact list. <code>!memory clear</code> wipes it — <span style="color:var(--red)">owner only</span>.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category to view; <b>owner</b> to clear.</dd>
+          <dt>Result</dt><dd>A numbered list of durable facts, or confirmation it was cleared (it rebuilds from the next scheduled digest).</dd>
+          <dt>Notes</dt><dd>Leadership-only. Memory never includes tensions and never touches the roundtable or <code>/ask</code>.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--red)"><h3>🚩 !flag · !flags · !unflag <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Mark important messages or screenshots so they're highlighted in summaries.</dd>
+          <dt>How to use</dt><dd><code>!flag</code> flags the previous message (or an attached/previous screenshot). <code>!flags</code> lists this channel's flags. <code>!unflag [number]</code> removes one.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category.</dd>
+          <dt>Example</dt><dd class="ex">!unflag 2</dd>
+          <dt>Result</dt><dd>The flagged item is saved and appears in summaries within its time window; the list re-posts cleanly instead of stacking.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--purple)"><h3>🏆 !award · !sagareset <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Grant Saga Points and run the seasonal reset.</dd>
+          <dt>How to use</dt><dd><code>!award @player &lt;pathing|siege|final|number&gt; [reason]</code> grants points. <code>!sagareset [label]</code> archives standings, awards lifetime-XP bonuses to the top 10, then zeros everyone.</dd>
+          <dt>Needs</dt><dd>Leadership/admin role.</dd>
+          <dt>Example</dt><dd class="ex">!award @Lobo siege Great defense</dd>
+          <dt>Result</dt><dd>Points added (objective amounts come from game config) and the leaderboard updates. Reset announces the bonus list.</dd>
+          <dt>Notes</dt><dd>Objective types &amp; point values are defined in the game config.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--orange)"><h3>🕵️ !activity <span class="badge lead">ADMIN AREA</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Leadership engagement report — who's showing up and who's gone quiet.</dd>
+          <dt>How to use</dt><dd>Run <code>!activity</code> in the admin category / admin forum.</dd>
+          <dt>Result</dt><dd>Scans the activity category (last ~30 days) and lists every role-holder with messages, reactions, RSVPs, and last-seen — split into Active and Quiet (7+ days silent).</dd>
+          <dt>Notes</dt><dd>Leadership intel only — never shown to members. Entirely separate from the public XP system.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--gold)"><h3>🗓️ !rsvp · 🧹 !clearplans · !clearscreenshots <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Audit the auto-created RSVPs, and wipe stored plans or screenshot intel.</dd>
+          <dt>How to use</dt><dd><code>!rsvp</code> lists every auto-created RSVP (read-only audit). <code>!clearplans</code> empties the plan list <b>and</b> all RSVP data. <code>!clearscreenshots</code> clears this channel's screenshots; <code>!clearscreenshots all</code> clears every channel's.</dd>
+          <dt>Needs</dt><dd>Leadership/admin category.</dd>
+          <dt>Result</dt><dd>A numbered RSVP list, or confirmation of how many items were removed; changes are persisted.</dd>
+        </dl>
+      </div>
+
+      <div class="feat" style="--c:var(--teal)"><h3>🏓 !ping · ℹ️ !commands (full) <span class="badge lead">LEADERSHIP</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Quick health check and the complete command reference.</dd>
+          <dt>How to use</dt><dd><code>!ping</code> confirms the bot is alive (leadership/admin only). <code>!commands</code> in a leadership/admin area prints the full command list.</dd>
+          <dt>Result</dt><dd>Self-deleting replies.</dd>
+        </dl>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ROSTER -->
+  <section id="roster">
+    <div class="lbl">📋 <b>Roster management</b></div>
+    <div class="stack">
+      <div class="feat" style="--c:var(--green)"><h3>📋 !roster add / remove / clear <span class="badge roster">ROSTER MANAGERS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Maintain the official roster, kept in sync with the Google Sheet.</dd>
+          <dt>How to use</dt><dd><code>!roster add P1, P2</code>, <code>!roster remove P1, P2</code> (comma-separated), <code>!roster clear</code>. Works only in the admin category / admin forum.</dd>
+          <dt>Needs</dt><dd>A roster-manager user ID.</dd>
+          <dt>Example</dt><dd class="ex">!roster add Spyre, Rude</dd>
+          <dt>Result</dt><dd>Updates the in-bot roster, the roster thread post, and the Google Sheet (removed players are archived to a "Previous Players" tab).</dd>
+          <dt>Notes</dt><dd><code>!roster search &lt;name&gt;</code> (no special permission) also works here.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--sky)"><h3>🔎 !roster check <span class="badge roster">ROSTER MANAGERS</span></h3>
+        <dl>
+          <dt>Purpose</dt><dd>Compare an in-game roster screenshot against the bot roster to spot who left.</dd>
+          <dt>How to use</dt><dd>Attach a roster screenshot to <code>!roster check</code> (or post one, then run it). Up to 3 images are read.</dd>
+          <dt>Result</dt><dd>Claude vision extracts the names, then reports who is <b>possibly missing</b> (on bot roster, not in screenshot) and who is <b>not on the bot roster</b>.</dd>
+          <dt>Notes</dt><dd>Comparison is case-insensitive. Use it to reconcile the roster after membership changes.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- DIPLOMACY -->
   <section id="diplo">
     <div class="lbl">🤝 <b>Diplomacy &amp; roundtable</b></div>
@@ -376,8 +376,8 @@
       </div>
       <div class="feat" style="--c:var(--pink)"><h3>📅 Plan detection &amp; reminders <span class="badge auto">AUTOMATIC</span></h3>
         <dl>
-          <dt>What it does</dt><dd>Claude scans ops/leadership/diplomacy messages containing a weekday + month and extracts confirmed future plans (UTC-normalized). A timer pings ~1h before each with RSVP buttons. Expired plans are cleaned up hourly.</dd>
-          <dt>Notes</dt><dd>Only future, confirmed, "ours" plans are stored; enemy/speculative/past mentions are ignored. Duplicates are de-duped by date fingerprint.</dd>
+          <dt>What it does</dt><dd>Claude scans the <b>announcement forum threads only</b> (Announcement, Objectives, Emergency) for messages with a weekday + month and extracts confirmed future plans (UTC-normalized), reacting <b>⏰</b> on the source message when it creates an RSVP. A timer pings ~1h before each with RSVP buttons. Expired plans are cleaned up hourly.</dd>
+          <dt>Notes</dt><dd>RSVPs are created from announcements only — diplomacy/cross-faction chatter never spawns one. Only future, confirmed, "ours" plans are stored; enemy/speculative/past mentions are ignored. Duplicates are de-duped by date fingerprint. Audit with <code>!rsvp</code>.</dd>
         </dl>
       </div>
       <div class="feat" style="--c:var(--sky)"><h3>🖼️ Screenshot analysis <span class="badge auto">AUTOMATIC · AI VISION</span></h3>
