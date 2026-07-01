@@ -226,11 +226,12 @@
       <div class="feat" style="--c:var(--blue)"><h3>🧠 !summarize · !summarize all · !summarize dm <span class="badge lead">LEADERSHIP</span></h3>
         <dl>
           <dt>Purpose</dt><dd>Generate a structured intelligence brief from chat, plans, flags, and screenshot intel.</dd>
-          <dt>How to use</dt><dd><code>!summarize</code> = this channel → leadership summary channel. <code>!summarize all</code> = all leadership channels + the four forum threads → leadership summary channel. <code>!summarize dm</code> = <span style="color:var(--red)">owner only</span>; scans all leadership + diplomacy channels and DMs the owner a factual snapshot.</dd>
+          <dt>How to use</dt><dd><code>!summarize</code> = this channel → leadership summary channel. <code>!summarize all</code> = all leadership channels + the four forum threads → leadership summary channel. <code>!summarize dm</code> = <span style="color:var(--red)">owner only</span>; DMs the owner a factual snapshot of all leadership + diplomacy channels.</dd>
+          <dt>DM snapshot is "what's new"</dt><dd><code>!summarize dm</code> reports <b>only information posted since the last snapshot</b> (it tracks a per-channel cursor), grouped by Discord <b>category → channel</b>. If nothing is new it says so in one line. Use <code>!summarize dm full</code> to ignore the cursor and re-scan the last 25 messages/channel.</dd>
           <dt>Needs</dt><dd>Leadership/admin category for the first two; <b>owner</b> for <code>dm</code>.</dd>
-          <dt>Example</dt><dd class="ex">!summarize all</dd>
+          <dt>Example</dt><dd class="ex">!summarize dm</dd>
           <dt>Result</dt><dd>A teammate-style (or factual, for DM) brief. The <b>🔥 Tensions</b> block is always split off and posted only to the salt-mines channel — never in the main brief.</dd>
-          <dt>Notes</dt><dd>Runs Claude Opus 4.8 at max effort. The owner can also DM the bot the text <code>!summarize dm</code> privately.</dd>
+          <dt>Notes</dt><dd>Runs Claude Opus 4.8 at max effort. The owner can also DM the bot the text <code>!summarize dm</code> (or <code>!summarize dm full</code>) privately.</dd>
         </dl>
       </div>
 
@@ -270,7 +271,7 @@
           <dt>Needs</dt><dd>Leadership/admin role.</dd>
           <dt>Example</dt><dd class="ex">!award @Lobo siege Great defense</dd>
           <dt>Result</dt><dd>Points added (objective amounts come from game config) and the leaderboard updates. Reset announces the bonus list.</dd>
-          <dt>Notes</dt><dd>Objective types &amp; point values are defined in the game config.</dd>
+          <dt>Notes</dt><dd>Objective types &amp; point values are defined in the game config. <code>!sagareset</code> also wipes Project Valkyrie's seasonal memory (unit types + season levels); permanent profiles are untouched.</dd>
         </dl>
       </div>
 
@@ -371,7 +372,7 @@
       <div class="feat" style="--c:var(--gold)"><h3>📨 25-message trigger <span class="badge auto">AUTOMATIC</span></h3>
         <dl>
           <dt>What it does</dt><dd>Counts human messages across all leadership + diplomacy channels (excluding chill-zone). At 25 it sends the owner a factual DM snapshot, then resets.</dd>
-          <dt>Notes</dt><dd>No public post — owner DM only. Tensions still route to salt-mines.</dd>
+          <dt>Notes</dt><dd>No public post — owner DM only. Tensions still route to salt-mines. The snapshot reports <b>only what's new since the previous one</b> (per-channel cursor), grouped by category → channel, so the same events are never repeated.</dd>
         </dl>
       </div>
       <div class="feat" style="--c:var(--pink)"><h3>📅 Plan detection &amp; reminders <span class="badge auto">AUTOMATIC</span></h3>
@@ -460,12 +461,61 @@
     </div>
   </section>
 
+  <!-- PROJECT VALKYRIE -->
+  <section id="valkyrie">
+    <div class="lbl">🛡️ <b>Project Valkyrie</b> — game-module set for Norse Eternal</div>
+    <div class="stack">
+      <div class="feat" style="--c:var(--blue)"><h3>🧭 Overview <span class="badge auto">BUILT · CHANNELS LOCKED UNTIL LAUNCH</span></h3>
+        <dl>
+          <dt>What it is</dt><dd>A self-contained set of four modules for the mobile game Norse Eternal. Fully built and deployed but the channels stay <b>locked from players</b> until the game releases — then you just open the channels, no code change. Always uses <code>claude-opus-4-8</code>. Walled off from every existing system (no XP, summaries, message log, plan detection, or chatter run in Valkyrie channels).</dd>
+          <dt>The game is swappable</dt><dd>Game data lives in a Google Sheet (the "rulebook"), not in code. Settings live in <code>config/valkyrie.js</code>; all copy in <code>config/valkyrie-messages.js</code>; Discord IDs in <code>config/constants.js</code>.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--teal)"><h3>🛠️ Build Advisor <span class="badge everyone">#build-help · LOCKED</span></h3>
+        <dl>
+          <dt>Setup</dt><dd>Automatic — on startup the bot posts the locked-channel instructions + <b>Start build help</b> button into #build-help if it isn't already there (it won't duplicate on restarts). If you delete it, the next restart re-posts it. No command needed.</dd>
+          <dt>How players use it</dt><dd>Tap the <b>Start build help</b> button → the bot opens a private thread (you, the leadership role, and the player). They post commanders + gear (screenshots or text), tap <b>Done — analyze</b>, confirm what was read, then pick a situation — the bot gives ONE focused build: 1 commander + 3 unit types, with the synergy explained.</dd>
+          <dt>What's stored</dt><dd>Permanent profile (commanders, permanent levels, gear) → PostgreSQL + mirrored to Sheet 2. Unit types + season levels → seasonal memory (wiped at <code>!sagareset</code>).</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--sky)"><h3>📊 Reports <span class="badge everyone">#reports · LOCKED</span></h3>
+        <dl>
+          <dt>How it works</dt><dd>Players post a battle screenshot (a written note is encouraged). The bot extracts gear, units, and the commander, tags the report with that commander, and saves it. No confirmation — append-only evidence.</dd>
+          <dt>Privacy</dt><dd>Reports are <b>PostgreSQL-only and Build-Advisor-only</b> — never shown to officers, never in a sheet, never in any summary. They feed the player's own build advice (recent 10, commander-filtered).</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--purple)"><h3>🛡️ Recruitment <span class="badge lead">#recruitment · OFFICERS DECIDE</span></h3>
+        <dl>
+          <dt>Flow</dt><dd>When a player gets the <b>New Recruit</b> role (onboarding or a manual assignment), the bot auto-opens a private application thread. The applicant submits commanders + gear (units don't matter for joining). After they confirm, the bot posts a silent <b>STRONG / MID / WEAK</b> analysis to the roster thread with <b>✅ Accept / 🚫 Deny</b> buttons.</dd>
+          <dt>Your decision</dt><dd><b>Accept</b> → bot grants Team Member, removes New Recruit, archives the thread. <b>Deny</b> → bot deletes the report, silent denial, thread stays open for you to close. The bot can <b>never</b> accept or reject on its own. Applicant data is <b>never stored</b> — analysis only.</dd>
+          <dt>Backout</dt><dd>An applicant can tap <b>"Nevermind, I just wanna hangout"</b> → bot swaps them to Buddies + Chill Zone and deletes the thread.</dd>
+          <dt>Turn it on/off (no redeploy)</dt><dd><code>!recruitment off</code> deactivates the whole module — New Recruit roles are ignored, no threads spawn. <code>!recruitment on</code> re-activates. <code>!recruitment</code> alone shows status. Persists across restarts. Run it from a leadership/admin channel (not inside #recruitment). Leadership/admin only.</dd>
+          <dt>Thresholds</dt><dd>Case-by-case by default. A config toggle (<code>config/valkyrie.js · recruitment</code>) can <b>flag</b> sub-threshold applicants (permanent level + gear tier) in the report — it never rejects.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--green)"><h3>🆔 Identification <span class="badge auto">OFF BY DEFAULT</span></h3>
+        <dl>
+          <dt>What it does</dt><dd>When enabled, step 1 of the recruitment thread asks for a screenshot of the player's in-game name, confirms it with buttons, and sets their Discord nickname to match.</dd>
+          <dt>Turning it on/off</dt><dd>Live from Discord: <code>!identify on</code> / <code>!identify off</code> (persists, no redeploy; <code>!identify</code> alone shows status). The <code>identificationEnabled</code> value in <code>config/valkyrie.js</code> is just the default. When on, the bot needs <b>Manage Nicknames</b> and its role positioned above new recruits.</dd>
+        </dl>
+      </div>
+      <div class="feat" style="--c:var(--red)"><h3>🔑 Admin notes <span class="badge lead">ADMIN</span></h3>
+        <dl>
+          <dt>Rulebook = the engine</dt><dd>Sheet 1 (Game Data) is the bot's knowledge base. <b>Edit access is Admin-only</b> (a Google-Sheet sharing setting) — a corrupt rulebook would poison all advice. The bot only ever reads it, refreshing every ~30 min.</dd>
+          <dt>Season reset</dt><dd><code>!sagareset</code> now also wipes Valkyrie's seasonal memory (unit types + season levels). Permanent profiles (commanders, gear) are untouched.</dd>
+          <dt>Launch</dt><dd>Fill the rulebook with real data, test, then unlock the three channels. No code change needed.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- INTEGRATIONS -->
   <section id="integ">
     <div class="lbl">🔌 <b>Integrations</b></div>
     <div class="two">
       <div class="info"><h3>📗 Google Sheets (roster)</h3><p>The roster's source of truth. On startup the bot loads members from the sheet; <code>!roster</code> edits write back to it, and removed players are archived to a "Previous Players" tab. Credentials come from an environment secret.</p></div>
-      <div class="info"><h3>🗄️ PostgreSQL on Railway</h3><p>Persists flags, plans, screenshots, RSVPs, activity, XP, Saga, the message log, and long-term memory as key→JSON rows. Loaded on startup; written by periodic flushes and on change.</p></div>
+      <div class="info"><h3>🗄️ PostgreSQL on Railway</h3><p>Persists flags, plans, screenshots, RSVPs, activity, XP, Saga, the message log, and long-term memory as key→JSON rows. Loaded on startup; written by periodic flushes and on change. Project Valkyrie adds the first <b>relational tables</b> (players, commanders, gear, reports) alongside the key→JSON store — self-initialized on startup from <code>db/valkyrie-migration.sql</code>.</p></div>
+      <div class="info"><h3>📘 Google Sheets (Valkyrie)</h3><p>Two leadership-only sheets: <b>Game Data</b> (the rulebook the bot reads; edit access Admin-only) and <b>Player Data</b>. Player Data has two bot-maintained tabs: <b>Machine Sheet</b> (a flat failover mirror of the profile drawers — PostgreSQL is the source of truth) and <b>Player Sheet</b> (a readable, auto-generated officer view, one block per player). Both rebuild on the ~30-min heal cycle; do not hand-edit them. Configured in <code>config/valkyrie.js</code>. Share both sheets with the bot's service account (Editor).</p></div>
     </div>
   </section>
 
